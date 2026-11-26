@@ -1,0 +1,13 @@
+[versions]
+agp = "9.5.2"
+junit = "4.13.2"
+androidxJunit = "1.1.5"
+androidxRunner = "1.5.2"
+
+[libraries]
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "androidxRunner" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }

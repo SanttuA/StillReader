@@ -1,0 +1,40 @@
+name: Android CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Verify checked-in dependencies and repository contents
+        shell: pwsh
+        run: |
+          ./scripts/verify-dependencies.ps1
+          ./scripts/scan-repository.ps1
+
+      - name: Select JDK and install the pinned Android SDK packages
+        shell: bash
+        run: |
+          test -x "${JAVA_HOME_25_X64:?JDK 25 is required}/bin/java"
+          echo "JAVA_HOME=$JAVA_HOME_25_X64" >> "$GITHUB_ENV"
+          sdkmanager --install 'platforms;android-37.0' 'build-tools;36.0.0'
+
+      - name: Build, test and lint
+        run: |
+          bash ./gradlew --dependency-verification=strict --console=plain \
+            :app:assembleDebug :app:test :app:assembleDebugAndroidTest \
+            :app:lint :app:assembleRelease
+
+      - name: Verify the merged and packaged release manifests
+        shell: pwsh
+        run: ./scripts/verify-release-manifest.ps1

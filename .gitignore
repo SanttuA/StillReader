@@ -1,0 +1,42 @@
+# Local tooling and build output
+.idea/
+*.iml
+.gradle/
+.kotlin/
+local.properties
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+.DS_Store
+Thumbs.db
+.agents/
+.codex/
+.aws/
+
+# Credentials and signing
+.env
+.env.*
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.key
+keystore.properties
+signing.properties
+
+# Local documents and app data
+*.pdf
+books/
+personal/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.hprof
+*.log
+*.tmp
+*.apk
+*.aab
