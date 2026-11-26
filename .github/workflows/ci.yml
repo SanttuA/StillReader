@@ -1,7 +1,6 @@
 name: Android CI
 
 on:
-  push:
   pull_request:
 
 permissions:
@@ -27,7 +26,7 @@ jobs:
         run: |
           test -x "${JAVA_HOME_25_X64:?JDK 25 is required}/bin/java"
           echo "JAVA_HOME=$JAVA_HOME_25_X64" >> "$GITHUB_ENV"
-          sdkmanager --install 'platforms;android-37.0' 'build-tools;36.0.0'
+          "${ANDROID_HOME:?Android SDK is required}/cmdline-tools/latest/bin/sdkmanager" --install 'platforms;android-37.0' 'build-tools;36.0.0'
 
       - name: Build, test and lint
         run: |
